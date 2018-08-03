@@ -17,7 +17,7 @@ public class CategoryService {
 	public Category find(Integer id) {
 		
 		Optional<Category> category = categoryDAO.findById(id);		
-		return category.get();
+		return category.orElse(null);
 	}
 
 }
