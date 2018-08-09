@@ -9,15 +9,18 @@ import com.netcracker.cursomc.dao.CategoryDAO;
 import com.netcracker.cursomc.domain.Category;
 
 @Service
-public class CategoryService {
+public class CategoryService extends MainService {
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
 	public Category find(Integer id) {
 		
-		Optional<Category> category = categoryDAO.findById(id);		
-		return category.orElse(null);
+		Optional<Category> optionalCategory = categoryDAO.findById(id);
+
+		this.setErro(!optionalCategory.isPresent());
+		
+		return optionalCategory.orElse(null);
 	}
 
 }
