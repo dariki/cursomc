@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.netcracker.cursomc.dao.AddressDAO;
 import com.netcracker.cursomc.dao.CategoryDAO;
 import com.netcracker.cursomc.dao.CityDAO;
+import com.netcracker.cursomc.dao.CustomerDAO;
 import com.netcracker.cursomc.dao.ProductDAO;
 import com.netcracker.cursomc.dao.StateDAO;
+import com.netcracker.cursomc.dao.enums.CustomerType;
+import com.netcracker.cursomc.domain.Address;
 import com.netcracker.cursomc.domain.Category;
 import com.netcracker.cursomc.domain.City;
+import com.netcracker.cursomc.domain.Customer;
 import com.netcracker.cursomc.domain.Product;
 import com.netcracker.cursomc.domain.State;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	CityDAO cityDAO;
+	
+	@Autowired
+	CustomerDAO customerDAO;
+	
+	@Autowired
+	AddressDAO addressDAO;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -71,6 +82,15 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		stateDAO.saveAll(Arrays.asList(minasGerais, saoPauloState));
 		cityDAO.saveAll(Arrays.asList(uberlandia, saoPauloCity, campinas));
+		
+		Customer mariaSilva = new Customer(null, "Maria Silva", "mariasilva@gmail.com", "36378912377", CustomerType.PERSON);
+		
+		customerDAO.saveAll(Arrays.asList(mariaSilva));
+		
+		Address ruaFlores = new Address(null, "Rua Flores", "300", "Apto 203", "Jardins", "38220-834", uberlandia, mariaSilva);
+		Address avenidaMatos = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777-012", saoPauloCity, mariaSilva);
+		
+		addressDAO.saveAll(Arrays.asList(ruaFlores, avenidaMatos));
 		
 	}
 }
