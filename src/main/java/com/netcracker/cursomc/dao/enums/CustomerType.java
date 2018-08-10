@@ -29,7 +29,7 @@ public enum CustomerType {
 		this.description = name;
 	}
 	
-	public CustomerType getCustomerType(Integer id) {
+	public static CustomerType getCustomerType(Integer id) {
 		CustomerType customerTypeSelected = null;
 		
 		for (CustomerType customerType : CustomerType.values()) {

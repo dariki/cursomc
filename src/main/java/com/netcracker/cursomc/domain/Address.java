@@ -27,15 +27,21 @@ private static final long serialVersionUID = 1L;
 	@JoinColumn(name = "cityId")
 	private City city;
 	
+	@ManyToOne
+	@JoinColumn(name = "customerId")
+	private Customer customer;
+	
 	public Address() {}
 
-	public Address(Integer id, String street, String number, String complement, String region, String zipcode) {
+	public Address(Integer id, String street, String number, String complement, String region, String zipcode, City city, Customer customer) {
 		this.id = id;
 		this.street = street;
 		this.number = number;
 		this.complement = complement;
 		this.region = region;
 		this.zipcode = zipcode;
+		this.city = city;
+		this.customer = customer;
 	}
 
 	public Integer getId() {
