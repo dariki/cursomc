@@ -1,6 +1,7 @@
 package com.netcracker.cursomc;
 
 import java.util.Arrays;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,6 +12,7 @@ import com.netcracker.cursomc.dao.AddressDAO;
 import com.netcracker.cursomc.dao.CategoryDAO;
 import com.netcracker.cursomc.dao.CityDAO;
 import com.netcracker.cursomc.dao.CustomerDAO;
+import com.netcracker.cursomc.dao.OrderDAO;
 import com.netcracker.cursomc.dao.ProductDAO;
 import com.netcracker.cursomc.dao.StateDAO;
 import com.netcracker.cursomc.dao.enums.CustomerType;
@@ -18,6 +20,7 @@ import com.netcracker.cursomc.domain.Address;
 import com.netcracker.cursomc.domain.Category;
 import com.netcracker.cursomc.domain.City;
 import com.netcracker.cursomc.domain.Customer;
+import com.netcracker.cursomc.domain.Order;
 import com.netcracker.cursomc.domain.Product;
 import com.netcracker.cursomc.domain.State;
 
@@ -25,22 +28,25 @@ import com.netcracker.cursomc.domain.State;
 public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
-	CategoryDAO categoryDAO;
+	private CategoryDAO categoryDAO;
 	
 	@Autowired
-	ProductDAO productDAO;
+	private ProductDAO productDAO;
 	
 	@Autowired
-	StateDAO stateDAO;
+	private StateDAO stateDAO;
 	
 	@Autowired
-	CityDAO cityDAO;
+	private CityDAO cityDAO;
 	
 	@Autowired
-	CustomerDAO customerDAO;
+	private CustomerDAO customerDAO;
 	
 	@Autowired
-	AddressDAO addressDAO;
+	private AddressDAO addressDAO;
+	
+	@Autowired
+	private OrderDAO orderDAO;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -91,6 +97,11 @@ public class CursomcApplication implements CommandLineRunner {
 		Address avenidaMatos = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777-012", saoPauloCity, mariaSilva);
 		
 		addressDAO.saveAll(Arrays.asList(ruaFlores, avenidaMatos));
+		
+		Order order1 = new Order(null, Calendar.getInstance(), mariaSilva, ruaFlores);
+		Order order2 = new Order(null, Calendar.getInstance(), mariaSilva, avenidaMatos);
+		
+		orderDAO.saveAll(Arrays.asList(order1, order2));
 		
 	}
 }

@@ -36,6 +36,9 @@ public class Customer implements Serializable {
 	@CollectionTable(name = "PHONE")
 	private Set<String> phones = new HashSet<>();
 	
+	@OneToMany(mappedBy = "customer")
+	private Set<Order> orders = new HashSet<>();
+	
 	public Customer() {}
 
 	public Customer(Integer id, String name, String email, String socialSecurity, CustomerType customerType) {
@@ -101,6 +104,18 @@ public class Customer implements Serializable {
 
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
+	}
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
+	public void setCustomerType(Integer customerType) {
+		this.customerType = customerType;
 	}
 	
 	
