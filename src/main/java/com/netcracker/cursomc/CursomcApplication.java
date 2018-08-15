@@ -13,14 +13,17 @@ import com.netcracker.cursomc.dao.CategoryDAO;
 import com.netcracker.cursomc.dao.CityDAO;
 import com.netcracker.cursomc.dao.CustomerDAO;
 import com.netcracker.cursomc.dao.OrderDAO;
+import com.netcracker.cursomc.dao.PaymentDAO;
 import com.netcracker.cursomc.dao.ProductDAO;
 import com.netcracker.cursomc.dao.StateDAO;
 import com.netcracker.cursomc.dao.enums.CustomerType;
+import com.netcracker.cursomc.dao.enums.PaymentType;
 import com.netcracker.cursomc.domain.Address;
 import com.netcracker.cursomc.domain.Category;
 import com.netcracker.cursomc.domain.City;
 import com.netcracker.cursomc.domain.Customer;
 import com.netcracker.cursomc.domain.Order;
+import com.netcracker.cursomc.domain.Payment;
 import com.netcracker.cursomc.domain.Product;
 import com.netcracker.cursomc.domain.State;
 
@@ -47,6 +50,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private OrderDAO orderDAO;
+	
+	@Autowired
+	private PaymentDAO paymentDAO;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -102,6 +108,11 @@ public class CursomcApplication implements CommandLineRunner {
 		Order order2 = new Order(null, Calendar.getInstance(), mariaSilva, avenidaMatos);
 		
 		orderDAO.saveAll(Arrays.asList(order1, order2));
+
+		Payment paymentPaid = new Payment(null, PaymentType.PAID);
+		Payment paymentPending = new Payment(null, PaymentType.PENDING);
+		
+		paymentDAO.saveAll(Arrays.asList(paymentPaid, paymentPending));
 		
 	}
 }

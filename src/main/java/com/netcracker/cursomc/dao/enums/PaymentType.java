@@ -2,8 +2,9 @@ package com.netcracker.cursomc.dao.enums;
 
 public enum PaymentType {
 	
-	PERSON(1, "Person"),
-	COMPANY(2, "Company");
+	PENDING(1, "Pending"),
+	PAID(2, "Paid"),
+	CANCELED(3, "Canceled");
 	
 	private Integer id;
 	private String description;
