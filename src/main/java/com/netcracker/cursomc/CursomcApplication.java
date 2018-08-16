@@ -1,7 +1,10 @@
 package com.netcracker.cursomc;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,6 +27,8 @@ import com.netcracker.cursomc.domain.City;
 import com.netcracker.cursomc.domain.Customer;
 import com.netcracker.cursomc.domain.Order;
 import com.netcracker.cursomc.domain.Payment;
+import com.netcracker.cursomc.domain.PaymentCreditCard;
+import com.netcracker.cursomc.domain.PaymentInvoice;
 import com.netcracker.cursomc.domain.Product;
 import com.netcracker.cursomc.domain.State;
 
@@ -104,15 +109,26 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		addressDAO.saveAll(Arrays.asList(ruaFlores, avenidaMatos));
 		
-		Order order1 = new Order(null, Calendar.getInstance(), mariaSilva, ruaFlores);
-		Order order2 = new Order(null, Calendar.getInstance(), mariaSilva, avenidaMatos);
+		SimpleDateFormat createDateOrderFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Calendar datePaymentCreditCard = Calendar.getInstance();
+		datePaymentCreditCard.setTime(createDateOrderFormat.parse("30/09/2017 10:32"));
+		
+		Calendar datePaymentInvoice = Calendar.getInstance();
+		datePaymentInvoice.setTime(createDateOrderFormat.parse("30/09/2017 10:32"));
+		
+		Order order1 = new Order(null, datePaymentCreditCard, mariaSilva, ruaFlores);
+		Order order2 = new Order(null, datePaymentInvoice, mariaSilva, avenidaMatos);
 		
 		orderDAO.saveAll(Arrays.asList(order1, order2));
-
-		Payment paymentPaid = new Payment(null, PaymentType.PAID);
-		Payment paymentPending = new Payment(null, PaymentType.PENDING);
 		
-		paymentDAO.saveAll(Arrays.asList(paymentPaid, paymentPending));
+		SimpleDateFormat duoDateOrderFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar duoDateInvoice = Calendar.getInstance();
+		duoDateInvoice.setTime(duoDateOrderFormat.parse("20/10/2017"));
+
+		PaymentCreditCard paymentPaidCreditCard = new PaymentCreditCard(null, PaymentType.PAID, 6);
+		PaymentInvoice paymentPendingInvoice = new PaymentInvoice(null, PaymentType.PENDING, duoDateInvoice, null);
+		
+		paymentDAO.saveAll(Arrays.asList(paymentPaidCreditCard, paymentPendingInvoice));
 		
 	}
 }
