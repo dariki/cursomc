@@ -1,10 +1,8 @@
 package com.netcracker.cursomc;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,6 +14,7 @@ import com.netcracker.cursomc.dao.CategoryDAO;
 import com.netcracker.cursomc.dao.CityDAO;
 import com.netcracker.cursomc.dao.CustomerDAO;
 import com.netcracker.cursomc.dao.OrderDAO;
+import com.netcracker.cursomc.dao.OrderItemDAO;
 import com.netcracker.cursomc.dao.PaymentDAO;
 import com.netcracker.cursomc.dao.ProductDAO;
 import com.netcracker.cursomc.dao.StateDAO;
@@ -26,7 +25,7 @@ import com.netcracker.cursomc.domain.Category;
 import com.netcracker.cursomc.domain.City;
 import com.netcracker.cursomc.domain.Customer;
 import com.netcracker.cursomc.domain.Order;
-import com.netcracker.cursomc.domain.Payment;
+import com.netcracker.cursomc.domain.OrderItem;
 import com.netcracker.cursomc.domain.PaymentCreditCard;
 import com.netcracker.cursomc.domain.PaymentInvoice;
 import com.netcracker.cursomc.domain.Product;
@@ -58,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PaymentDAO paymentDAO;
+
+	@Autowired
+	private OrderItemDAO orderItemDAO;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -130,5 +132,10 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		paymentDAO.saveAll(Arrays.asList(paymentPaidCreditCard, paymentPendingInvoice));
 		
+		OrderItem orderItem1 = new OrderItem(order1, computer, 0.00, 1, 2000.00);
+		OrderItem orderItem2 = new OrderItem(order1, mouse, 0.00, 2, 80.00);
+		OrderItem orderItem3 = new OrderItem(order2, printer, 100.00, 1, 800.00);
+		
+		orderItemDAO.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3));
 	}
 }
