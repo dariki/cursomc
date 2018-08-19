@@ -23,4 +23,11 @@ public class CategoryService extends MainService {
 		return optionalCategory.orElse(null);
 	}
 
+	public Category insert(Category category) {
+		category.setId(null);
+		return categoryDAO.save(category);
+	}
+	
+	
+
 }
