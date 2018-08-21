@@ -137,5 +137,6 @@ public class CursomcApplication implements CommandLineRunner {
 		OrderItem orderItem3 = new OrderItem(order2, printer, 100.00, 1, 800.00);
 		
 		orderItemDAO.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3));
+		
 	}
 }
