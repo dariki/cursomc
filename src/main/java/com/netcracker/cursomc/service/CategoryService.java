@@ -15,11 +15,7 @@ public class CategoryService extends MainService {
 	private CategoryDAO categoryDAO;
 	
 	public Category find(Integer id) {
-		
 		Optional<Category> optionalCategory = categoryDAO.findById(id);
-
-		this.setErro(!optionalCategory.isPresent());
-		
 		return optionalCategory.orElse(null);
 	}
 
@@ -27,7 +23,8 @@ public class CategoryService extends MainService {
 		category.setId(null);
 		return categoryDAO.save(category);
 	}
-	
-	
 
+	public Category update(Category category) {
+		return categoryDAO.save(category);
+	}
 }

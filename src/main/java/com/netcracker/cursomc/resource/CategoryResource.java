@@ -30,11 +30,13 @@ public class CategoryResource extends MainResource {
 		
 		Category category = categoryService.find(id);
 
-		ResponseEntity<?> responseEntityCategory = ResponseEntity.ok(category);
+		ResponseEntity<?> responseEntityCategory = ResponseEntity.badRequest().build();
 
-		if(categoryService.isErro()) {
+		if(category != null) {
+			 responseEntityCategory = ResponseEntity.ok(category);
+		} else {
 			MainDomain mainDomain = new MainDomain();
-			responseEntityCategory = new ResponseEntity<MainDomain>(mainDomain, HttpStatus.NOT_FOUND);//ResponseEntity.ok(new ErrorDomain(id));
+			responseEntityCategory = new ResponseEntity<MainDomain>(mainDomain, HttpStatus.NOT_FOUND);
 		}
  
 		return responseEntityCategory;
@@ -46,6 +48,24 @@ public class CategoryResource extends MainResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(category.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Category category){
+		
+		ResponseEntity<?> responseEntity = ResponseEntity.badRequest().build();
+		
+		if(id != null && id > 0) {
+			category.setId(id);
+			category = categoryService.update(category);
+			responseEntity = ResponseEntity.noContent().build();
+		} else {
+			MainDomain mainDomain = new MainDomain();
+			responseEntity = new ResponseEntity<MainDomain>(mainDomain, HttpStatus.NOT_FOUND);
+		}
+		
+		return responseEntity;
+		
 	}
 		
 	

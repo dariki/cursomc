@@ -13,6 +13,10 @@ public class MainDomain {
 	private Integer errorCode;
 	private Integer id;
 	
+	public MainDomain() {
+		timestamp = Calendar.getInstance();
+	}
+	
 	public Integer getResults() {
 		return results;
 	}
