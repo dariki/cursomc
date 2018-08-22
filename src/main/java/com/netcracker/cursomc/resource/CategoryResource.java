@@ -1,6 +1,7 @@
 package com.netcracker.cursomc.resource;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,10 +18,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.netcracker.cursomc.domain.Category;
 import com.netcracker.cursomc.domain.MainDomain;
 import com.netcracker.cursomc.service.CategoryService;
+import com.netcracker.cursomc.service.exception.StandardError;
 
 @RestController
 @RequestMapping(value = "/category")
-public class CategoryResource extends MainResource {
+public class CategoryResource {
 	
 	@Autowired
 	private CategoryService categoryService;
@@ -35,9 +37,20 @@ public class CategoryResource extends MainResource {
 		if(category != null) {
 			 responseEntityCategory = ResponseEntity.ok(category);
 		} else {
-			MainDomain mainDomain = new MainDomain();
-			responseEntityCategory = new ResponseEntity<MainDomain>(mainDomain, HttpStatus.NOT_FOUND);
+			responseEntityCategory = StandardError.getInstance(HttpStatus.NOT_FOUND);
 		}
+ 
+		return responseEntityCategory;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<?> findAll(HttpServletRequest request){
+		
+		List<Category> categoryList = categoryService.findAll();
+
+		ResponseEntity<?> responseEntityCategory = ResponseEntity.badRequest().build();
+
+		responseEntityCategory = ResponseEntity.ok(categoryList);
  
 		return responseEntityCategory;
 	}
@@ -67,26 +80,14 @@ public class CategoryResource extends MainResource {
 		return responseEntity;
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE) 	
 	public ResponseEntity<?> delete(@PathVariable Integer id){
 		
 		ResponseEntity<?> responseEntity = ResponseEntity.badRequest().build();
 		
-		boolean resultDeletion = false;
-		
 		if(id != null) {
-			resultDeletion = categoryService.delete(id);
-			if(resultDeletion) {
-				responseEntity = ResponseEntity.noContent().build();
-			} else {
-				MainDomain mainDomain = new MainDomain();
-				mainDomain.setStatus(HttpStatus.NOT_FOUND.value());
-				responseEntity = new ResponseEntity<MainDomain>(mainDomain, HttpStatus.valueOf(mainDomain.getStatus()));
-			}
-		}		
+			categoryService.delete(id);
+		}
 		return responseEntity;
 	}
-		
-	
-
 }

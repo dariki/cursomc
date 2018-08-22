@@ -1,16 +1,16 @@
 package com.netcracker.cursomc.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.netcracker.cursomc.dao.CategoryDAO;
 import com.netcracker.cursomc.domain.Category;
 
 @Service
-public class CategoryService extends MainService {
+public class CategoryService {
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
@@ -29,14 +29,12 @@ public class CategoryService extends MainService {
 		return categoryDAO.save(category);
 	}
 
-	public boolean delete(Integer id) {
-		boolean returnDelete = false;
-		try {
-			categoryDAO.deleteById(id);
-			returnDelete = true;
-		} catch (EmptyResultDataAccessException emptyException) {
-			returnDelete = false;
-		}
-		return returnDelete;
+	public void delete(Integer id) {
+		categoryDAO.deleteById(id);
+	}
+
+	public List<Category> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
