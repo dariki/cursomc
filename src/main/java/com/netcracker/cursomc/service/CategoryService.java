@@ -3,6 +3,7 @@ package com.netcracker.cursomc.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.netcracker.cursomc.dao.CategoryDAO;
@@ -26,5 +27,16 @@ public class CategoryService extends MainService {
 
 	public Category update(Category category) {
 		return categoryDAO.save(category);
+	}
+
+	public boolean delete(Integer id) {
+		boolean returnDelete = false;
+		try {
+			categoryDAO.deleteById(id);
+			returnDelete = true;
+		} catch (EmptyResultDataAccessException emptyException) {
+			returnDelete = false;
+		}
+		return returnDelete;
 	}
 }

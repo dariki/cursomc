@@ -65,7 +65,26 @@ public class CategoryResource extends MainResource {
 		}
 		
 		return responseEntity;
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> delete(@PathVariable Integer id){
 		
+		ResponseEntity<?> responseEntity = ResponseEntity.badRequest().build();
+		
+		boolean resultDeletion = false;
+		
+		if(id != null) {
+			resultDeletion = categoryService.delete(id);
+			if(resultDeletion) {
+				responseEntity = ResponseEntity.noContent().build();
+			} else {
+				MainDomain mainDomain = new MainDomain();
+				mainDomain.setStatus(HttpStatus.NOT_FOUND.value());
+				responseEntity = new ResponseEntity<MainDomain>(mainDomain, HttpStatus.valueOf(mainDomain.getStatus()));
+			}
+		}		
+		return responseEntity;
 	}
 		
 	
