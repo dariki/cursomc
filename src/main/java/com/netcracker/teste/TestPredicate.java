@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class Teste {
+public class TestPredicate {
 
 	
 	public static void main(String[] args) {
 		
 		List<Person> persons = new ArrayList<Person>();
 		
-		Person person1 = new Teste().new Person();
+		Person person1 = new TestPredicate().new Person();
 		person1.setAddress("Address Person 1");
 		person1.setAge(37);
 		person1.seteMail("person1@email.com");
@@ -22,7 +22,7 @@ public class Teste {
 		
 		persons.add(person1);
 		
-		Person person2 = new Teste().new Person();
+		Person person2 = new TestPredicate().new Person();
 		person2.setAddress("Address Person 2");
 		person2.setAge(32);
 		person2.seteMail("person2@email.com");
@@ -33,7 +33,7 @@ public class Teste {
 		
 		persons.add(person2);
 		
-		Person person3 = new Teste().new Person();
+		Person person3 = new TestPredicate().new Person();
 		person3.setAddress("Address Person 3");
 		person3.setAge(21);
 		person3.seteMail("person3@email.com");
@@ -44,13 +44,13 @@ public class Teste {
 		
 		persons.add(person3);
 		
-		Predicate<Teste.Person> predDrivers = person -> person.getAge() >= 16;
+		Predicate<TestPredicate.Person> predDrivers = person -> person.getAge() >= 16;
 		showDrivers(persons, predDrivers);
 		
-		Predicate<Teste.Person> predDraftee = person -> person.getAge() >= 18 && person.getAge() <= 25 && person.getGender() == Gender.MALE;
+		Predicate<TestPredicate.Person> predDraftee = person -> person.getAge() >= 18 && person.getAge() <= 25 && person.getGender() == Gender.MALE;
 		showDraftees(persons, predDraftee);
 		
-		Predicate<Teste.Person> predPilot = person -> person.getAge() >= 23 && person.getAge() <= 65;
+		Predicate<TestPredicate.Person> predPilot = person -> person.getAge() >= 23 && person.getAge() <= 65;
 		showPilots(persons, predPilot);
 		
 	}
